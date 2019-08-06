@@ -1,19 +1,25 @@
-# CentOS Docker
+# CentOS Linux for Docker
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
 [![Docker Stars](https://img.shields.io/docker/stars/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
 [![Docker Build Status](https://img.shields.io/docker/cloud/build/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
 
+A small CentOS Linux base image designed for use in containers.
 
-Docker image with CentOS GNU/Linux.
+All non-required packages were removed to create this small image. When using
+this image you may have to install some of the packages that usually are
+installed on a regular CentOS Linux image.
 
-## Synopsis
+## Supported tags
 
-This is a set of scripts designed to create Docker images with CentOS
-GNU/Linux.
+- `7.5.1804`
+- `7.6.1810`, `7`, `latest`
 
-The Docker images resulting from these scripts should be the ones used to
-instantiate a CentOS container.
+## What is CentOS?
+
+> The CentOS Project is a community-driven free software effort focused on delivering a robust open source ecosystem. For users, we offer a consistent manageable platform that suits a wide variety of deployments. For open source communities, we offer a solid, predictable base to build upon, along with extensive resources to build, test, release, and maintain their code.
+
+*from* [centos.org](https://www.centos.org)
 
 ## Getting Started
 
@@ -31,18 +37,17 @@ Docker installation instructions can be found
 
 ### Usage
 
-Detailed instructions can be found on the specific release folders.
+To start a container with this image and run a shell use the following
+command (the container will be deleted after exiting the shell):
 
-## Contributing
+```
+$ docker run --rm -i -t fscm/centos bash
+```
 
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request
+## Build
 
-Please read the [CONTRIBUTING.md](CONTRIBUTING.md) file for more details on how
-to contribute to this project.
+Build instructions can be found
+[here](https://github.com/fscm/docker-centos/blob/master/README.build.md).
 
 ## Versioning
 
@@ -55,8 +60,3 @@ available, see the [tags on this repository](https://github.com/fscm/docker-cent
 
 See also the list of [contributors](https://github.com/fscm/docker-centos/contributors)
 who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE)
-file for details

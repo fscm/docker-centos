@@ -1,13 +1,21 @@
-# CentOS Docker
+# CentOS Linux for Docker
 
-Docker image with CentOS GNU/Linux.
+A small CentOS Linux base image designed for use in containers.
 
-## Synopsis
+All non-required packages were removed to create this small image. When using
+this image you may have to install some of the packages that usually are
+installed on a regular CentOS Linux image.
 
-This script will create a Docker image with CentOS GNU/Linux.
+## Supported tags
 
-The Docker image resulting from this script should be the one used to
-instantiate a CentOS container.
+- `7.5.1804`
+- `7.6.1810`, `7`, `latest`
+
+## What is CentOS?
+
+> The CentOS Project is a community-driven free software effort focused on delivering a robust open source ecosystem. For users, we offer a consistent manageable platform that suits a wide variety of deployments. For open source communities, we offer a solid, predictable base to build upon, along with extensive resources to build, test, release, and maintain their code.
+
+*from* [centos.org](https://www.centos.org)
 
 ## Getting Started
 
@@ -25,81 +33,17 @@ Docker installation instructions can be found
 
 ### Usage
 
-In order to create a Docker image using this Dockerfile you need to run the
-`docker` command with a few options.
+To start a container with this image and run a shell use the following
+command (the container will be deleted after exiting the shell):
 
 ```
-docker build --squash --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
+$ docker run --rm -i -t fscm/centos bash
 ```
 
-* `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
-* `<IMAGE>` - *[required]* The container name (e.g.: "centos").
-* `<TAG>` - *[required]* The container tag (e.g.: "latest").
-* `<PATH>` - *[required]* The location of the Dockerfile folder.
+## Build
 
-A build example:
-
-```
-docker build --squash --force-rm --no-cache --tag johndoe/my_centos:latest .
-```
-
-To clean the _<none>_ image(s) left by the `--squash` option the following
-command can be used:
-
-```
-docker rmi `docker images --filter "dangling=true" --quiet`
-```
-
-### Instantiate a Container
-
-To start a container with this image and run a shell use the following command
-(the container will be deleted after exiting the shell):
-
-```
-docker run --rm -i -t johndoe/my_centos:latest bash
-```
-
-### Add Tags to the Docker Image
-
-Additional tags can be added to the image using the following command:
-
-```
-docker tag <image_id> <user>/<image>:<extra_tag>
-```
-
-### Push the image to Docker Hub
-
-After adding an image to Docker, that image can be pushed to a Docker
-registry... Like Docker Hub.
-
-Make sure that you are logged in to the service.
-
-```
-docker login
-```
-
-When logged in, an image can be pushed using the following command:
-
-```
-docker push <user>/<image>:<tag>
-```
-
-Extra tags can also be pushed.
-
-```
-docker push <user>/<image>:<extra_tag>
-```
-
-## Contributing
-
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request
-
-Please read the [CONTRIBUTING.md](../CONTRIBUTING.md) file for more details on how
-to contribute to this project.
+Build instructions can be found
+[here](https://github.com/fscm/docker-centos/blob/master/README.build.md).
 
 ## Versioning
 
@@ -112,8 +56,3 @@ available, see the [tags on this repository](https://github.com/fscm/docker-cent
 
 See also the list of [contributors](https://github.com/fscm/docker-centos/contributors)
 who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](../LICENSE)
-file for details
