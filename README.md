@@ -13,7 +13,8 @@ installed on a regular CentOS Linux image.
 ## Supported tags
 
 - `7.5.1804`
-- `7.6.1810`, `7`, `latest`
+- `7.6.1810`
+- `7.7.1908`, `7`, `latest`
 
 ## What is CentOS?
 
