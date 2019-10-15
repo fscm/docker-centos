@@ -1,22 +1,31 @@
 FROM centos:7 as first_stage
 
 ARG OS_CODENAME="centos"
+ARG OS_VERSION="7.7.1908"
+
+ENV LANG=en_US.UTF-8
 
 COPY files/ /root/
 
 RUN \
+# dependencies
   yum --assumeyes --quiet install yum-utils device-mapper-persistent-data lvm2 && \
-  mkdir -p /build/usr/local && \
+# build structure
+  install --directory --owner=root --group=root --mode=0755 /build/usr/local && \
+# copy tests
   cp -R /root/tests /build/usr/local/ && \
   chmod +x /build/usr/local/tests/* && \
-  yum --assumeyes --quiet --downloadonly --downloaddir=. reinstall ${OS_CODENAME}-release && \
+# build first stage
+  yumdownloader --assumeyes --quiet --destdir=. ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
+  #yum --assumeyes --quiet --downloadonly --downloaddir=. reinstall ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
   rpm --root /build --initdb && \
   rpm --root /build --install --nodeps --noscripts ${OS_CODENAME}-release*.rpm && \
-  rpm --root /build --import /build/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7 && \
+  rpm --root /build --import /build/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
   rpm --root /build --query --file --queryformat '%{NAME}\n' /etc/redhat-release | cut -f 1 -d '-' > /build/etc/yum/vars/contentdir && \
   rpm --root /build --query --file --queryformat '%{VERSION}\n' /etc/redhat-release > /build/etc/yum/vars/releasever && \
   yum --assumeyes --quiet --installroot=/build --setopt=tsflags='nodocs' --setopt=override_install_langs=en_US.utf8 install yum yum-plugin-ovl coreutils bash && \
   sed -i '/distroverpkg=centos-release/a override_install_langs=en_US.utf8\ntsflags=nodocs' /build/etc/yum.conf && \
+# clean up...
   rm -rf /build/usr/share/info/* && \
   rm -rf /build/usr/share/man/* && \
   rm -rf /build/var/cache/yum/* && \
@@ -29,7 +38,8 @@ RUN \
   find /build/usr/share/doc -mindepth 1 -type d -empty -delete && \
   find /build/var/cache -type f -delete && \
   find /build/etc/yum.repos.d -not -iname *base* -type f -delete && \
-  cat /etc/centos-release
+# check version
+  cat /build/etc/centos-release
 
 
 
@@ -37,6 +47,8 @@ FROM scratch
 
 LABEL \
   maintainer="Frederico Martins <https://hub.docker.com/u/fscm/>"
+
+ENV LANG=en_US.UTF-8
 
 COPY --from=first_stage \
   /build .
