@@ -8,8 +8,18 @@ ENV LANG=en_US.UTF-8
 COPY files/ /root/
 
 RUN \
+# import rpm key
+  rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
+# 'disable' systemctl command
+  mv /usr/bin/systemctl /usr/bin/systemctl.orig && \
+  ln -s /bin/true /usr/bin/systemctl && \
 # dependencies
-  yum --assumeyes --quiet install yum-utils device-mapper-persistent-data lvm2 && \
+  yum --assumeyes --quiet install \
+    yum-utils \
+    device-mapper-persistent-data \
+    lvm2 && \
+# restore systemctl command
+  #mv /usr/bin/systemctl.orig /usr/bin/systemctl && \
 # build structure
   install --directory --owner=root --group=root --mode=0755 /build/usr/local && \
 # copy tests
@@ -17,15 +27,19 @@ RUN \
   chmod +x /build/usr/local/tests/* && \
 # build first stage
   yumdownloader --assumeyes --quiet --destdir=. ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
-  #yum --assumeyes --quiet --downloadonly --downloaddir=. reinstall ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
   rpm --root /build --initdb && \
+  rpm --root /build --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
   rpm --root /build --install --nodeps --noscripts ${OS_CODENAME}-release*.rpm && \
-  rpm --root /build --import /build/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
+  #rpm --root /build --import /build/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
   rpm --root /build --query --file --queryformat '%{NAME}\n' /etc/redhat-release | cut -f 1 -d '-' > /build/etc/yum/vars/contentdir && \
   rpm --root /build --query --file --queryformat '%{VERSION}\n' /etc/redhat-release > /build/etc/yum/vars/releasever && \
-  yum --assumeyes --quiet --installroot=/build --setopt=tsflags='nodocs' --setopt=override_install_langs=en_US.utf8 install yum yum-plugin-ovl coreutils bash && \
+  yum --assumeyes --quiet --installroot=/build --setopt=tsflags='nodocs' --setopt=override_install_langs=en_US.utf8 install \
+    yum \
+    yum-plugin-ovl \
+    coreutils \
+    bash && \
+# clean up and tweaks...
   sed -i '/distroverpkg=centos-release/a override_install_langs=en_US.utf8\ntsflags=nodocs' /build/etc/yum.conf && \
-# clean up...
   rm -rf /build/usr/share/info/* && \
   rm -rf /build/usr/share/man/* && \
   rm -rf /build/var/cache/yum/* && \
