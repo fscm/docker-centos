@@ -29,7 +29,7 @@ In order to create a Docker image using this Dockerfile you need to run the
 `docker` command with a few options.
 
 ```
-docker build --squash --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
+docker image build --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
 ```
 
 * `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
@@ -40,14 +40,14 @@ docker build --squash --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
 A build example:
 
 ```
-docker build --squash --force-rm --no-cache --tag johndoe/my_centos:latest .
+docker image build --force-rm --no-cache --tag johndoe/my_centos:latest .
 ```
 
-To clean the _<none>_ image(s) left by the `--squash` option the following
+To clean any _<none>_ image(s) left by the build process the following
 command can be used:
 
 ```
-docker rmi `docker images --filter "dangling=true" --quiet`
+docker image rm `docker image ls --filter "dangling=true" --quiet`
 ```
 
 ### Instantiate a Container
@@ -56,7 +56,7 @@ To start a container with this image and run a shell use the following command
 (the container will be deleted after exiting the shell):
 
 ```
-docker run --rm -i -t johndoe/my_centos:latest bash
+docker container run --rm --interactive --tty johndoe/my_centos:latest bash
 ```
 
 ### Add Tags to the Docker Image
@@ -64,7 +64,7 @@ docker run --rm -i -t johndoe/my_centos:latest bash
 Additional tags can be added to the image using the following command:
 
 ```
-docker tag <image_id> <user>/<image>:<extra_tag>
+docker image tag <image_id> <user>/<image>:<extra_tag>
 ```
 
 ### Push the image to Docker Hub
@@ -81,13 +81,13 @@ docker login
 When logged in, an image can be pushed using the following command:
 
 ```
-docker push <user>/<image>:<tag>
+docker image push <user>/<image>:<tag>
 ```
 
 Extra tags can also be pushed.
 
 ```
-docker push <user>/<image>:<extra_tag>
+docker image push <user>/<image>:<extra_tag>
 ```
 
 ## Contributing
