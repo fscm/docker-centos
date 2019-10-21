@@ -23,11 +23,10 @@ RUN \
 # build structure
   install --directory --owner=root --group=root --mode=0755 /build && \
 # build first stage
-  yumdownloader --assumeyes --quiet --destdir=. ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
+  yumdownloader --assumeyes --quiet --arch=x86_64 --destdir=. ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
   rpm --root /build --initdb && \
   rpm --root /build --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
   rpm --root /build --install --nodeps --noscripts ${OS_CODENAME}-release*.rpm && \
-  #rpm --root /build --import /build/etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-${OS_VERSION%%.*} && \
   rpm --root /build --query --file --queryformat '%{NAME}\n' /etc/redhat-release | cut -f 1 -d '-' > /build/etc/yum/vars/contentdir && \
   rpm --root /build --query --file --queryformat '%{VERSION}\n' /etc/redhat-release > /build/etc/yum/vars/releasever && \
   yum --assumeyes --quiet --installroot=/build --setopt=tsflags='nodocs' --setopt=override_install_langs=en_US.utf8 install \
@@ -36,13 +35,15 @@ RUN \
     coreutils \
     bash && \
 # clean up and tweaks...
-  sed -i '/distroverpkg=centos-release/a override_install_langs=en_US.utf8\ntsflags=nodocs' /build/etc/yum.conf && \
+  sed -i '/distroverpkg=centos-release/a exclude=*.i?86\noverride_install_langs=en_US.utf8\ntsflags=nodocs' /build/etc/yum.conf && \
   rm -rf /build/usr/share/info/* && \
   rm -rf /build/usr/share/man/* && \
   rm -rf /build/var/cache/yum/* && \
   rm -rf /build/var/log/* && \
   rm -rf /build/sbin/sln && \
+  rm -rf /build/tmp/.??* && \
   rm -rf /build/dev/null && \
+  rm -rf /build/boot && \
   find /build/usr/share/i18n/locales -mindepth 1 -maxdepth 1 -not -name en_US -exec rm -r {} + && \
   find /build/usr/share/locale -mindepth 1 -maxdepth 1 -not \( -name en -o -name en_US \) -type d -exec rm -r {} + && \
   find /build/usr/share/doc -mindepth 1 -not -name COPYING* -not -type d -delete && \
