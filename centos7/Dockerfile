@@ -21,10 +21,7 @@ RUN \
 # restore systemctl command
   #mv /usr/bin/systemctl.orig /usr/bin/systemctl && \
 # build structure
-  install --directory --owner=root --group=root --mode=0755 /build/usr/local && \
-# copy tests
-  cp -R /root/tests /build/usr/local/ && \
-  chmod +x /build/usr/local/tests/* && \
+  install --directory --owner=root --group=root --mode=0755 /build && \
 # build first stage
   yumdownloader --assumeyes --quiet --destdir=. ${OS_CODENAME}-release-${OS_VERSION/./-}* && \
   rpm --root /build --initdb && \
@@ -52,6 +49,9 @@ RUN \
   find /build/usr/share/doc -mindepth 1 -type d -empty -delete && \
   find /build/var/cache -type f -delete && \
   find /build/etc/yum.repos.d -not -iname *base* -type f -delete && \
+# copy tests
+  #install --directory --owner=root --group=root --mode=0755 /build/usr/bin && \
+  install --owner=root --group=root --mode=0755 --target-directory=/build/usr/bin /root/tests/* && \
 # check version
   cat /build/etc/centos-release
 
