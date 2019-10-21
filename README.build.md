@@ -30,6 +30,7 @@ Detailed instructions can be found on the `README.build.md` file of the
 specific release folders.
 
 - [CentOS7](https://github.com/fscm/docker-centos/blob/master/centos7/README.build.md)
+- [CentOS8](https://github.com/fscm/docker-centos/blob/master/centos8/README.build.md)
 
 ## Contributing
 
