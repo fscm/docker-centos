@@ -41,10 +41,15 @@ RUN \
   rm -rf /build/var/cache/yum/* && \
   rm -rf /build/var/log/* && \
   rm -rf /build/sbin/sln && \
+  rm -rf /build/dev/.??* && \
+  rm -rf /build/home/.??* && \
+  rm -rf /build/root/.??* && \
   rm -rf /build/tmp/.??* && \
-  rm -rf /build/dev/null && \
   rm -rf /build/boot && \
+  rm -rf /build/proc && \
+  rm -rf /build/sys && \
   find /build/usr/share/i18n/locales -mindepth 1 -maxdepth 1 -not -name en_US -exec rm -r {} + && \
+  find /build/usr/lib64/gconv -mindepth 1 -maxdepth 1 -type f -not -name 'UTF*' -delete && \
   find /build/usr/share/locale -mindepth 1 -maxdepth 1 -not \( -name en -o -name en_US \) -type d -exec rm -r {} + && \
   find /build/usr/share/doc -mindepth 1 -not -name COPYING* -not -type d -delete && \
   find /build/usr/share/doc -mindepth 1 -type d -empty -delete && \
