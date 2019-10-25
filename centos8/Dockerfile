@@ -62,7 +62,7 @@ RUN \
   find /build/usr/share/doc -mindepth 1 -not -name COPYING* -not -type d -delete && \
   find /build/usr/share/doc -mindepth 1 -type d -empty -delete && \
   find /build/var/cache -type f -delete && \
-  find /build/etc/yum.repos.d -not -iname *base* -type f -delete && \
+  find /build/etc/yum.repos.d -not \( -iname *base* -o -iname *appstream* -o -iname *extras* -o -iname *powertools* -o -iname *centosplus* \) -type f -delete && \
 # copy tests
   #install --directory --owner=root --group=root --mode=0755 /build/usr/bin && \
   install --owner=root --group=root --mode=0755 --target-directory=/build/usr/bin /root/tests/* && \
