@@ -1,11 +1,13 @@
 FROM centos:8 as first_stage
 
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="8.0.1905"
+ARG OS_VERSION="8.1.1911"
 
-ENV LANG=LANG=C.utf8
+ENV LANG=C.utf8
 
 COPY files/ /root/
+
+WORKDIR /root
 
 RUN \
 # import rpm key
@@ -24,6 +26,7 @@ RUN \
   rpm --root /build --install --nodeps --noscripts ${OS_CODENAME}-release*.rpm && \
   yum --assumeyes --quiet --disablerepo='*' --enablerepo='BaseOS' --installroot=/build --setopt=tsflags='nodocs' --setopt=install_weak_deps='no' install \
     bash \
+    centos-repos \
     coreutils-single \
     glibc-minimal-langpack \
     hostname \
