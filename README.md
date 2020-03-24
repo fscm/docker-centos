@@ -1,9 +1,5 @@
 # CentOS Linux for Docker
 
-[![Docker Pulls](https://img.shields.io/docker/pulls/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
-[![Docker Stars](https://img.shields.io/docker/stars/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
-[![Docker Build Status](https://img.shields.io/docker/cloud/build/fscm/centos.svg?color=black&logo=docker&logoColor=white&style=flat-square)](https://hub.docker.com/r/fscm/centos)
-
 A small CentOS Linux base image designed for use in containers.
 
 All non-required packages were removed to create this small image. When using
