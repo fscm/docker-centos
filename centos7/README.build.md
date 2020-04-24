@@ -29,7 +29,7 @@ In order to create a Docker image using this Dockerfile you need to run the
 `docker` command with a few options.
 
 ```
-docker image build --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
+docker image build --force-rm --no-cache --quiet --tag <USER>/<IMAGE>:<TAG> <PATH>
 ```
 
 * `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
@@ -40,7 +40,7 @@ docker image build --force-rm --no-cache --tag <USER>/<IMAGE>:<TAG> <PATH>
 A build example:
 
 ```
-docker image build --force-rm --no-cache --tag johndoe/my_centos:latest .
+docker image build --force-rm --no-cache --quiet --tag johndoe/my_centos:latest .
 ```
 
 To clean any _<none>_ image(s) left by the build process the following
@@ -48,6 +48,12 @@ command can be used:
 
 ```
 docker image rm `docker image ls --filter "dangling=true" --quiet`
+```
+
+You can also use the following command to achieve the same result:
+
+```
+docker image prune -f
 ```
 
 ### Instantiate a Container

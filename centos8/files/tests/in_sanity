@@ -13,27 +13,24 @@
 
 echo "=== Docker Build Test ==="
 
-echo -n "[TEST] Check if yum command is installed... "
-rpm -q yum > /dev/null 2>&1
-if [[ "$?" -eq "0" ]]; then
+printf '[TEST] Check if yum command is installed... '
+if rpm -q yum > /dev/null 2>&1; then
   echo 'OK'
 else
   echo 'Failed'
   exit 1
 fi
 
-echo -n "[TEST] Check package installation with yum... "
-yum -y -q install less > /dev/null 2>&1 && less --version > /dev/null 2>&1
-if [[ "$?" -eq "0" ]]; then
+printf '[TEST] Check package installation with yum... '
+if (yum -y -q install less && less --version) > /dev/null 2>&1; then
   echo 'OK'
 else
   echo 'Failed'
   exit 2
 fi
 
-echo -n "[TEST] Check if packages are correctly installed... "
-MISSING=$(yum -q --assumeno install $(rpm -qa --qf "%{name} " | sed 's/gpg-pubkey[^ ]*//g') > /dev/null 2>&1; echo $?)
-if [[ "${MISSING}" -eq "0" ]]; then
+printf '[TEST] Check if packages are correctly installed... '
+if (yum -q --assumeno install $(rpm -qa --qf "%{name} " | sed 's/gpg-pubkey[^ ]*//g') > /dev/null 2>&1); then
   echo 'OK'
 else
   echo 'Failed'
