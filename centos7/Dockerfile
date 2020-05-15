@@ -7,7 +7,7 @@ FROM centos:7 as first_stage
 
 ARG __BUILD_DIR__
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="7.7.1908"
+ARG OS_VERSION="7.8.2003"
 ARG __USER__="root"
 ARG __WORK_DIR__="/root"
 
@@ -73,7 +73,7 @@ RUN \
   find "${__BUILD_DIR__}/etc/yum.repos.d" -not -iname '*base*' -type f -delete && \
 # copy tests
   echo '=== copying test files ===' && \
-  install --owner=${__USER__} --group=${__USER__} --mode=0755 --target-directory="${__BUILD_DIR__}/usr/bin" "${__WORK_DIR__}/tests"/* && \
+  install --owner="${__USER__}" --group="${__USER__}" --mode=0755 --target-directory="${__BUILD_DIR__}/usr/bin" "${__WORK_DIR__}/tests"/* && \
 # check version
   echo '=== os version ===' && \
   cat "${__BUILD_DIR__}/etc/centos-release" && \
