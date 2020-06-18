@@ -7,11 +7,13 @@ FROM centos:8 as first_stage
 
 ARG __BUILD_DIR__
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="8.1.1911"
+ARG OS_VERSION="8.2.2004"
 ARG __USER__="root"
 ARG __WORK_DIR__="/root"
 
-ENV LANG="C.utf8"
+ENV \
+  LANG="C.utf8" \
+  LC_ALL="C.utf8"
 
 USER ${__USER__}
 
@@ -31,7 +33,7 @@ RUN \
     yum-utils && \
 # build structure
   echo '=== creating build structure ===' && \
-  install --directory --owner=${__USER__} --group=${__USER__} --mode=0755 "${__BUILD_DIR__}" && \
+  install --directory --owner="${__USER__}" --group="${__USER__}" --mode=0755 "${__BUILD_DIR__}" && \
 # build first stage
   echo '=== building first stage ===' && \
   yumdownloader --assumeyes --quiet --arch="$(arch)" --destdir="${__WORK_DIR__}" ${OS_CODENAME}-release-${OS_VERSION%.*}-${OS_VERSION#*.}* && \
@@ -52,15 +54,15 @@ RUN \
   echo 'container' > "${__BUILD_DIR__}/etc/dnf/vars/infra" && \
   echo '%_install_langs C.utf8' > "${__BUILD_DIR__}/etc/rpm/macros.image-language-conf" && \
   :> "${__BUILD_DIR__}/etc/machine-id" && \
-  find "${__BUILD_DIR__}/lib/systemd/system/sysinit.target.wants" \( -type l -o -type f \) -not -name 'systemd-tmpfiles-setup.service' -delete && \
-  find "${__BUILD_DIR__}/etc/systemd/system"/*.wants \( -type l -o -type f \) -delete && \
+  find "${__BUILD_DIR__}/lib/systemd/system" -path '*/sysinit.target.wants/*' \( -type l -o -type f \) -not -name 'systemd-tmpfiles-setup.service' -delete && \
+  find "${__BUILD_DIR__}/etc" -path '*/systemd/system/*.wants/*' \( -type l -o -type f \) -delete && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/anaconda.target.wants"/* && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/basic.target.wants"/* && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/local-fs.target.wants"/* && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/multi-user.target.wants"/* && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/sockets.target.wants"/*udev* && \
   rm -f "${__BUILD_DIR__}/lib/systemd/system/sockets.target.wants"/*initctl* && \
-  chroot "${__BUILD_DIR__}/" systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount && \
+  if [ -x "${__BUILD_DIR__}/usr/bin/systemctl" ]; then chroot "${__BUILD_DIR__}/" systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount; fi && \
   rm -rf "${__BUILD_DIR__}/usr/share/info"/* && \
   rm -rf "${__BUILD_DIR__}/usr/share/man"/* && \
   rm -rf "${__BUILD_DIR__}/var/cache/yum"/* && \
@@ -83,7 +85,7 @@ RUN \
   find "${__BUILD_DIR__}/etc/yum.repos.d" -not \( -iname '*base*' -o -iname '*appstream*' -o -iname '*extras*' -o -iname '*powertools*' -o -iname '*centosplus*' \) -type f -delete && \
 # copy tests
   echo '=== copying test files ===' && \
-  install --owner=${__USER__} --group=${__USER__} --mode=0755 --target-directory="${__BUILD_DIR__}/usr/bin" "${__WORK_DIR__}/tests"/* && \
+  install --owner="${__USER__}" --group="${__USER__}" --mode=0755 --target-directory="${__BUILD_DIR__}/usr/bin" "${__WORK_DIR__}/tests"/* && \
 # check version
   echo '=== os version ===' && \
   cat "${__BUILD_DIR__}/etc/centos-release" && \
@@ -104,6 +106,8 @@ LABEL \
 
 COPY --from=first_stage "${__BUILD_DIR__}" "/"
 
-ENV LANG="C.utf8"
+ENV \
+  LANG="C.utf8" \
+  LC_ALL="C.utf8"
 
 CMD ["/bin/bash"]
