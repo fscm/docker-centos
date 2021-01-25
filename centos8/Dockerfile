@@ -7,13 +7,13 @@ FROM centos:8 as first_stage
 
 ARG __BUILD_DIR__
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="8.2.2004"
+ARG OS_VERSION="8.3.2011"
 ARG __USER__="root"
 ARG __WORK_DIR__="/root"
 
 ENV \
-  LANG="C.utf8" \
-  LC_ALL="C.utf8"
+  LANG="C.UTF-8" \
+  LC_ALL="C.UTF-8"
 
 USER ${__USER__}
 
@@ -36,13 +36,13 @@ RUN \
   install --directory --owner="${__USER__}" --group="${__USER__}" --mode=0755 "${__BUILD_DIR__}" && \
 # build first stage
   echo '=== building first stage ===' && \
-  yumdownloader --assumeyes --quiet --arch="$(arch)" --destdir="${__WORK_DIR__}" ${OS_CODENAME}-release-${OS_VERSION%.*}-${OS_VERSION#*.}* && \
+  yumdownloader --assumeyes --quiet --arch="$(arch),noarch" --destdir="${__WORK_DIR__}" ${OS_CODENAME}-*release-${OS_VERSION%.*}-* && \
   rpm --root "${__BUILD_DIR__}" --initdb && \
   rpm --root "${__BUILD_DIR__}" --import /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial && \
-  rpm --root "${__BUILD_DIR__}" --install --nodeps --noscripts "${__WORK_DIR__}"/${OS_CODENAME}-release*.rpm && \
-  yum --assumeyes --quiet --disablerepo='*' --enablerepo='BaseOS' --installroot="${__BUILD_DIR__}" --setopt=tsflags='nodocs' --setopt=install_weak_deps='no' install \
+  rpm --root "${__BUILD_DIR__}" --install --nodeps --noscripts "${__WORK_DIR__}"/${OS_CODENAME}-*release*.rpm && \
+  yum --assumeyes --quiet --disablerepo='*' --enablerepo='baseos' --installroot="${__BUILD_DIR__}" --setopt=tsflags='nodocs' --setopt=install_weak_deps='no' install \
     bash \
-    centos-repos \
+    centos-*repos \
     coreutils-single \
     glibc-minimal-langpack \
     hostname \
@@ -107,7 +107,7 @@ LABEL \
 COPY --from=first_stage "${__BUILD_DIR__}" "/"
 
 ENV \
-  LANG="C.utf8" \
-  LC_ALL="C.utf8"
+  LANG="C.UTF-8" \
+  LC_ALL="C.UTF-8"
 
 CMD ["/bin/bash"]

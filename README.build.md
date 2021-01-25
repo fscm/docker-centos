@@ -42,7 +42,7 @@ docker image build --force-rm --no-cache --quiet --file <VARIANT>/Dockerfile --t
 A build example:
 
 ```
-docker image build --force-rm --no-cache --quiet --file buster/Dockerfile --tag johndoe/my_centos:centos8-stream .
+docker image build --force-rm --no-cache --quiet --file centos8-stream/Dockerfile --tag johndoe/my_centos:centos8-stream .
 ```
 
 To clean any _<none>_ image(s) left by the build process the following

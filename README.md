@@ -14,7 +14,8 @@ installed on a regular CentOS Linux image.
 - `7.8.2003`, `7`
 - `8.0.1905`
 - `8.1.1911`
-- `8.2.2004`, `8`, `latest`
+- `8.2.2004`
+- `8.3.2011`, `8`, `latest`
 
 ## What is CentOS?
 
