@@ -7,7 +7,7 @@ FROM centos:7 as first_stage
 
 ARG __BUILD_DIR__
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="7.8.2003"
+ARG OS_VERSION="7.9.2009"
 ARG __USER__="root"
 ARG __WORK_DIR__="/root"
 
