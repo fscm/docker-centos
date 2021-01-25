@@ -26,11 +26,67 @@ Docker installation instructions can be found
 
 ### Usage
 
-Detailed instructions can be found on the `README.build.md` file of the
-specific release folders.
+In order to create a Docker image using this Dockerfiles you need to run the
+`docker` command with a few options.
 
-- [CentOS7](https://github.com/fscm/docker-centos/blob/master/centos7/README.build.md)
-- [CentOS8](https://github.com/fscm/docker-centos/blob/master/centos8/README.build.md)
+```
+docker image build --force-rm --no-cache --quiet --file <VARIANT>/Dockerfile --tag <USER>/<IMAGE>:<TAG> <PATH>
+```
+
+* `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
+* `<IMAGE>` - *[required]* The container name (e.g.: "centos").
+* `<TAG>` - *[required]* The container tag (e.g.: "latest").
+* `<PATH>` - *[required]* The location of the Dockerfile folder.
+* `<VARIANT>` - *[required]* The variant that is being build (`centos7`, `centos8` or `centos8-stream`).
+
+A build example:
+
+```
+docker image build --force-rm --no-cache --quiet --file buster/Dockerfile --tag johndoe/my_centos:centos8-stream .
+```
+
+To clean any _<none>_ image(s) left by the build process the following
+command can be used:
+
+```
+docker image rm `docker image ls --filter "dangling=true" --quiet`
+```
+
+You can also use the following command to achieve the same result:
+
+```
+docker image prune -f
+```
+
+### Add Tags to the Docker Image
+
+Additional tags can be added to the image using the following command:
+
+```
+docker image tag <image_id> <user>/<image>:<extra_tag>
+```
+
+### Push the image to Docker Hub
+
+After adding an image to Docker, that image can be pushed to a Docker registry... Like Docker Hub.
+
+Make sure that you are logged in to the service.
+
+```
+docker login
+```
+
+When logged in, an image can be pushed using the following command:
+
+```
+docker image push <user>/<image>:<tag>
+```
+
+Extra tags can also be pushed.
+
+```
+docker image push <user>/<image>:<extra_tag>
+```
 
 ## Contributing
 

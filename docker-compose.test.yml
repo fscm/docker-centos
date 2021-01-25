@@ -4,5 +4,6 @@ services:
   sut:
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: ${DOCKERFILE_PATH:-Dockerfile}
+    entrypoint: [""]
     command: ["/usr/bin/in_sanity"]
