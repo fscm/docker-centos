@@ -11,18 +11,22 @@
 # terms of the MIT License.
 #
 
+# Variables
+_PM_='yum'
+grep -q -i 'stream' /etc/centos-release && _PM_='dnf'
+
 echo "=== Docker Build Test ==="
 
-printf '[TEST] Check if yum command is installed... '
-if rpm -q yum > /dev/null 2>&1; then
+printf '[TEST] Check if %s command is installed... ' "${_PM_}"
+if rpm -q "${_PM_}" > /dev/null 2>&1; then
   echo 'OK'
 else
   echo 'Failed'
   exit 1
 fi
 
-printf '[TEST] Check package installation with yum... '
-if (yum -y -q install less && less --version) > /dev/null 2>&1; then
+printf '[TEST] Check package installation with %s... ' "${_PM_}"
+if ("${_PM_}" -y -q install less && less --version) > /dev/null 2>&1; then
   echo 'OK'
 else
   echo 'Failed'
@@ -30,7 +34,7 @@ else
 fi
 
 printf '[TEST] Check if packages are correctly installed... '
-if (yum -q --assumeno install $(rpm -qa --qf "%{name} " | sed 's/gpg-pubkey[^ ]*//g') > /dev/null 2>&1); then
+if ("${_PM_}" -q --assumeno install $(rpm -qa --qf "%{name} " | sed 's/gpg-pubkey[^ ]*//g') > /dev/null 2>&1); then
   echo 'OK'
 else
   echo 'Failed'
