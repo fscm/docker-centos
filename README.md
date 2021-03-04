@@ -8,16 +8,9 @@ installed on a regular CentOS Linux image.
 
 ## Supported tags
 
-- `7.5.1804`
-- `7.6.1810`
-- `7.7.1908`
-- `7.8.2003`
-- `7.9.2009`, `7`
-- `8.0.1905`
-- `8.1.1911`
-- `8.2.2004`
-- `8.3.2011`, `8`
-- `8.4.20201217`, `stream-8`, `stream`, `latest`
+- `7`
+- `8`
+- `stream-8`, `stream`, `latest`
 
 ## What is CentOS?
 
