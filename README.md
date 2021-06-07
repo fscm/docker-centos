@@ -8,9 +8,9 @@ installed on a regular CentOS Linux image.
 
 ## Supported tags
 
-- `7`
-- `8`
-- `stream-8`, `stream`, `latest`
+* `7`
+* `8`
+* `stream-8`, `stream`, `latest`
 
 ## What is CentOS?
 
@@ -37,7 +37,7 @@ Docker installation instructions can be found
 To start a container with this image and run a shell use the following
 command (the container will be deleted after exiting the shell):
 
-```
+```shell
 docker container run --rm --interactive --tty fscm/centos bash
 ```
 
