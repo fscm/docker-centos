@@ -7,7 +7,7 @@ FROM centos:8 as first_stage
 
 ARG __BUILD_DIR__
 ARG OS_CODENAME="centos"
-ARG OS_VERSION="8.4.20201217"
+ARG OS_VERSION="8.5.20210629"
 ARG __USER__="root"
 ARG __WORK_DIR__="/root"
 
@@ -114,7 +114,8 @@ RUN \
 # check version
   echo '=== os version ===' && \
   time { \
-    cat "${__BUILD_DIR__}/etc/centos-release" ; \
+    cat "${__BUILD_DIR__}/etc/centos-release" && \
+    rpm --query --queryformat='%{VERSION}\n' centos-stream-release ; \
   } && \
 # done
   echo '=== all done! ==='
