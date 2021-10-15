@@ -8,9 +8,11 @@ installed on a regular CentOS Linux image.
 
 ## Supported tags
 
-* `7`
-* `8`
-* `stream-8`, `stream`, `latest`
+- [`7`](https://github.com/fscm/docker-centos/blob/master/centos7/Dockerfile)
+- [`8`](https://github.com/fscm/docker-centos/blob/master/centos8/Dockerfile)
+- [`stream-8`][latest], [`stream`][latest], [`latest`][latest]
+
+[latest]: https://github.com/fscm/docker-centos/blob/master/centos8-stream/Dockerfile
 
 ## What is CentOS?
 
@@ -53,7 +55,7 @@ available, see the [tags on this repository](https://github.com/fscm/docker-cent
 
 ## Authors
 
-* **Frederico Martins** - [fscm](https://github.com/fscm)
+- **Frederico Martins** - [fscm](https://github.com/fscm)
 
 See also the list of [contributors](https://github.com/fscm/docker-centos/contributors)
 who participated in this project.

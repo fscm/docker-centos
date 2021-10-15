@@ -29,32 +29,32 @@ Docker installation instructions can be found
 In order to create a Docker image using this Dockerfiles you need to run the
 `docker` command with a few options.
 
-```
+```shell
 docker image build --force-rm --no-cache --quiet --file <VARIANT>/Dockerfile --tag <USER>/<IMAGE>:<TAG> <PATH>
 ```
 
-* `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
-* `<IMAGE>` - *[required]* The container name (e.g.: "centos").
-* `<TAG>` - *[required]* The container tag (e.g.: "latest").
-* `<PATH>` - *[required]* The location of the Dockerfile folder.
-* `<VARIANT>` - *[required]* The variant that is being build (`centos7`, `centos8` or `centos8-stream`).
+- `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
+- `<IMAGE>` - *[required]* The container name (e.g.: "centos").
+- `<TAG>` - *[required]* The container tag (e.g.: "latest").
+- `<PATH>` - *[required]* The location of the Dockerfile folder.
+- `<VARIANT>` - *[required]* The variant that is being build (`centos7`, `centos8` or `centos8-stream`).
 
 A build example:
 
-```
+```shell
 docker image build --force-rm --no-cache --quiet --file centos8-stream/Dockerfile --tag johndoe/my_centos:centos8-stream .
 ```
 
-To clean any _<none>_ image(s) left by the build process the following
+To clean any _`none`_ image(s) left by the build process the following
 command can be used:
 
-```
+```shell
 docker image rm `docker image ls --filter "dangling=true" --quiet`
 ```
 
 You can also use the following command to achieve the same result:
 
-```
+```shell
 docker image prune -f
 ```
 
@@ -62,7 +62,7 @@ docker image prune -f
 
 Additional tags can be added to the image using the following command:
 
-```
+```shell
 docker image tag <image_id> <user>/<image>:<extra_tag>
 ```
 
@@ -72,19 +72,19 @@ After adding an image to Docker, that image can be pushed to a Docker registry..
 
 Make sure that you are logged in to the service.
 
-```
+```shell
 docker login
 ```
 
 When logged in, an image can be pushed using the following command:
 
-```
+```shell
 docker image push <user>/<image>:<tag>
 ```
 
 Extra tags can also be pushed.
 
-```
+```shell
 docker image push <user>/<image>:<extra_tag>
 ```
 
@@ -106,7 +106,7 @@ available, see the [tags on this repository](https://github.com/fscm/docker-cent
 
 ## Authors
 
-* **Frederico Martins** - [fscm](https://github.com/fscm)
+- **Frederico Martins** - [fscm](https://github.com/fscm)
 
 See also the list of [contributors](https://github.com/fscm/docker-centos/contributors)
 who participated in this project.
