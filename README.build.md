@@ -30,7 +30,7 @@ In order to create a Docker image using this Dockerfiles you need to run the
 `docker` command with a few options.
 
 ```shell
-docker image build --force-rm --no-cache --quiet --file <VARIANT>/Dockerfile --tag <USER>/<IMAGE>:<TAG> <PATH>
+docker image build --force-rm --no-cache --progress plain --file <VARIANT>/Dockerfile --tag <USER>/<IMAGE>:<TAG> <PATH>
 ```
 
 - `<USER>` - *[required]* The user that will own the container image (e.g.: "johndoe").
@@ -42,7 +42,7 @@ docker image build --force-rm --no-cache --quiet --file <VARIANT>/Dockerfile --t
 A build example:
 
 ```shell
-docker image build --force-rm --no-cache --quiet --file centos8-stream/Dockerfile --tag johndoe/my_centos:centos8-stream .
+docker image build --force-rm --no-cache --progress plain --file centos8-stream/Dockerfile --tag johndoe/my_centos:centos8-stream .
 ```
 
 To clean any _`none`_ image(s) left by the build process the following
