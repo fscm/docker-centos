@@ -112,7 +112,7 @@ LABEL \
     org.label-schema.vendor="fscm" \
     org.label-schema.version=${OS_VERSION} \
     org.label-schema.docker.cmd="docker container run --interactive --rm --tty fscm/centos" \
-    org.label-schema.docker.cmd.test="docker container run --interactive --rm --tty fscm/memcached in_sanity"
+    org.label-schema.docker.cmd.test="docker container run --interactive --rm --tty fscm/centos in_sanity"
 
 COPY --from=first_stage "${__BUILD_DIR__}" "/"
 
