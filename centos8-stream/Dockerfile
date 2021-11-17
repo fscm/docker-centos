@@ -107,11 +107,6 @@ ARG __BUILD_DIR__
 ARG OS_VERSION
 
 LABEL \
-  maintainer="Frederico Martins <https://hub.docker.com/u/fscm/>" \
-  vendor="fscm" \
-  cmd="docker container run --interactive --rm --tty fscm/centos" \
-  params=""
-LABEL \
     maintainer="Frederico Martins <https://hub.docker.com/u/fscm/>" \
     vendor="fscm" \
     cmd="docker container run --interactive --rm --tty fscm/centos" \
