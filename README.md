@@ -10,9 +10,10 @@ installed on a regular CentOS Linux image.
 
 - [`7`](https://github.com/fscm/docker-centos/blob/master/centos7/Dockerfile)
 - [`8`](https://github.com/fscm/docker-centos/blob/master/centos8/Dockerfile)
-- [`stream-8`][latest], [`stream`][latest], [`latest`][latest]
+- [`stream-8`](https://github.com/fscm/docker-centos/blob/master/centos8-stream/Dockerfile)
+- [`stream-9`][latest], [`stream`][latest], [`latest`][latest]
 
-[latest]: https://github.com/fscm/docker-centos/blob/master/centos8-stream/Dockerfile
+[latest]: https://github.com/fscm/docker-centos/blob/master/centos9-stream/Dockerfile
 
 ## What is CentOS?
 

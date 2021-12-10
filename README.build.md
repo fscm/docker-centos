@@ -37,12 +37,12 @@ docker image build --force-rm --no-cache --progress plain --file <VARIANT>/Docke
 - `<IMAGE>` - *[required]* The container name (e.g.: "centos").
 - `<TAG>` - *[required]* The container tag (e.g.: "latest").
 - `<PATH>` - *[required]* The location of the Dockerfile folder.
-- `<VARIANT>` - *[required]* The variant that is being build (`centos7`, `centos8` or `centos8-stream`).
+- `<VARIANT>` - *[required]* The variant that is being build (`centos7`, `centos8`, `centos8-stream` or `centos9-stream`).
 
 A build example:
 
 ```shell
-docker image build --force-rm --no-cache --progress plain --file centos8-stream/Dockerfile --tag johndoe/my_centos:centos8-stream .
+docker image build --force-rm --no-cache --progress plain --file centos9-stream/Dockerfile --tag johndoe/my_centos:centos9-stream .
 ```
 
 To clean any _`none`_ image(s) left by the build process the following
