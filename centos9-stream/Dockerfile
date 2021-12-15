@@ -32,7 +32,8 @@ RUN \
     dnf --assumeyes --quiet install \
         device-mapper-persistent-data \
         lvm2 \
-        dnf-plugins-core && \
+        dnf-plugins-core \
+        > /dev/null && \
 # build structure
     echo '--> creating build structure' && \
     install --directory --owner="${__USER__}" --group="${__USER__}" --mode=0755 "${__BUILD_DIR__}" && \
@@ -53,7 +54,8 @@ RUN \
         dnf \
         glibc-minimal-langpack \
         hostname \
-        tar && \
+        tar \
+        > /dev/null && \
 # clean up and tweaks...
     echo '--> system settings and tweaks' && \
     sed -i -e '/best=True/a exclude=*.i?86\ntsflags=nodocs' "${__BUILD_DIR__}/etc/dnf/dnf.conf" && \
@@ -96,6 +98,7 @@ RUN \
     echo '--> os version' && \
     cat "${__BUILD_DIR__}/etc/centos-release" && \
     rpm --query --queryformat='%{VERSION}\n' centos-stream-release && \
+    arch && \
 # done
     echo '--> all done!'
 
