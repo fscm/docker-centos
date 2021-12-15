@@ -97,7 +97,7 @@ RUN \
 # check version
     echo '--> os version' && \
     cat "${__BUILD_DIR__}/etc/centos-release" && \
-    rpm --query --queryformat='%{VERSION}\n' centos-stream-release && \
+    rpm --root "${__BUILD_DIR__}" --query --queryformat='%{VERSION}\n' centos-stream-release && \
     arch && \
 # done
     echo '--> all done!'
