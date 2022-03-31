@@ -54,6 +54,7 @@ RUN \
         dnf \
         glibc-minimal-langpack \
         hostname \
+        rootfiles \
         tar \
         > /dev/null && \
 # clean up and tweaks...
@@ -73,13 +74,14 @@ RUN \
     if [ -x "${__BUILD_DIR__}/usr/bin/systemctl" ]; then chroot "${__BUILD_DIR__}/" systemctl mask systemd-logind.service getty.target console-getty.service sys-fs-fuse-connections.mount systemd-remount-fs.service dev-hugepages.mount; fi && \
     rm -rf "${__BUILD_DIR__}/usr/share/info"/* && \
     rm -rf "${__BUILD_DIR__}/usr/share/man"/* && \
+    rm -rf "${__BUILD_DIR__}/var/cache/dnf"/* && \
     rm -rf "${__BUILD_DIR__}/var/cache/yum"/* && \
     rm -rf "${__BUILD_DIR__}/var/lib/dnf"/history.* && \
     rm -rf "${__BUILD_DIR__}/var/log"/* && \
     rm -rf "${__BUILD_DIR__}/sbin/sln" && \
     rm -rf "${__BUILD_DIR__}/dev"/.??* && \
     rm -rf "${__BUILD_DIR__}/home"/.??* && \
-    rm -rf "${__BUILD_DIR__}/root"/.??* && \
+    # rm -rf "${__BUILD_DIR__}/root"/.??* && \
     rm -rf "${__BUILD_DIR__}/tmp"/.??* && \
     rm -rf "${__BUILD_DIR__}/boot" && \
     rm -rf "${__BUILD_DIR__}/proc" && \
